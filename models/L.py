@@ -1,23 +1,43 @@
 from models.Vertex import Vertex
 from models.Edge import Edge
+from models.GeometricTransformation import GeometricTransformation
+import pandas as pd
+import math
+
 
 class L:
-    def __init__ (self):
-        self.a = Vertex(-2.5, 3.5, 1)
-        self.b = Vertex(-2.5, -3.5, 1)
-        self.c = Vertex(2.5, -3.5, 1)
-        self.d = Vertex(2.5, -2.5, 1)
-        self.e = Vertex(-1.5, -2.5, 1)
-        self.f = Vertex(-1.5, 3.5, 1)
+    def __init__(self):
+        self.vertexes = []
 
-        self.ab = Edge(self.a, self.b)
-        self.bc = Edge(self.b, self.c)
-        self.cd = Edge(self.c, self.d)
-        self.de = Edge(self.d, self.e)
-        self.ef = Edge(self.e, self.f)
-        self.fa = Edge(self.f, self.a)
+        file = pd.read_csv('./letters.csv', ',')
 
-        self.vertexes = [self.a, self.b, self.c, self.d, self.e, self.f]
-        self.edges = [self.ab, self.bc, self.cd, self.de, self.ef, self.fa]
-        
+        # print(file, len(file))
 
+        for i in range(len(file) - 1):
+            # print(file['x'][i])
+            self.vertexes.append(Vertex(file['x'][i], file['y'][i], 1))
+
+        self.edges = []
+
+        print(len(self.vertexes))
+
+        first = self.vertexes[0]
+        firstIndex = 0
+
+        print(first.y)
+
+        for i, point in enumerate(self.vertexes):
+            if i == len(self.vertexes) - 1:
+                self.edges.append(Edge(point, first))
+            elif point != first and i > firstIndex+10 and math.sqrt(math.pow(point.x - first.x, 2)+math.pow(point.y - first.y, 2)) < math.sqrt(math.pow(point.x - self.vertexes[i+1].x, 2)+math.pow(point.y - self.vertexes[i+1].x, 2)):
+                print("TESTE")
+                self.edges.append(Edge(point, first))
+                first = self.vertexes[i+1]
+                firstIndex = i+1
+            # if i == len(self.vertexes) - 1:
+            #   # self.edges.append(Edge(self.vertexes[i], ))
+            #   print(self.vertexes[-1], self.vertexes[0])
+            #   self.edges.append(Edge(self.vertexes[-1], self.vertexes[0]))
+                # pass
+            else:
+                self.edges.append(Edge(self.vertexes[i], self.vertexes[i+1]))

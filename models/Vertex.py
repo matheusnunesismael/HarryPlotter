@@ -1,20 +1,20 @@
 class Vertex:
-  def __init__(self, x, y, z):
-    self.x = x
-    self.y = y 
-    self.z = z
-  
-  def coordinatesXY(self):
-    return self.x, self.y
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
 
-  def coordinatesY(self):
-    return self.y
+    def getXY(self):
+        return self.x, self.y
 
-  def coordinatesX(self):
-    return self.x
+    def getY(self):
+        return self.y
 
-  def coordinatesZ(self):
-    return self.z
+    def getX(self):
+        return self.x
 
-  def coordinatesXYZ(self):
-    return self.x,self.y, self.z
+    def getZ(self):
+        return self.z
+
+    def getXYZ(self):
+        return self.x, self.y, self.z

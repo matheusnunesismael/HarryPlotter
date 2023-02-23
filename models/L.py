@@ -1,6 +1,6 @@
 from models.Vertex import Vertex
 from models.Edge import Edge
-from models.GeometricTransformation import GeometricTransformation
+from models.GeometricTransformation import GeometricTransformation as gt
 import pandas as pd
 import math
 
@@ -19,25 +19,29 @@ class L:
 
         self.edges = []
 
-        print(len(self.vertexes))
-
+        # Essa variável é usada para armazenar o primeiro ponto de cada polígono (internou externo)
         first = self.vertexes[0]
+        # Variável responsável por armazenar o índice do primeiro ponto de cada polígono
         firstIndex = 0
-
-        print(first.y)
-
         for i, point in enumerate(self.vertexes):
+            # se for o ultimo elemento precisa ligar ele com o primeiro ponto do polígono (pra fechar)
             if i == len(self.vertexes) - 1:
                 self.edges.append(Edge(point, first))
-            elif point != first and i > firstIndex+10 and math.sqrt(math.pow(point.x - first.x, 2)+math.pow(point.y - first.y, 2)) < math.sqrt(math.pow(point.x - self.vertexes[i+1].x, 2)+math.pow(point.y - self.vertexes[i+1].x, 2)):
-                print("TESTE")
-                self.edges.append(Edge(point, first))
-                first = self.vertexes[i+1]
-                firstIndex = i+1
-            # if i == len(self.vertexes) - 1:
-            #   # self.edges.append(Edge(self.vertexes[i], ))
-            #   print(self.vertexes[-1], self.vertexes[0])
-            #   self.edges.append(Edge(self.vertexes[-1], self.vertexes[0]))
-                # pass
             else:
-                self.edges.append(Edge(self.vertexes[i], self.vertexes[i+1]))
+                print(f'Point: {point.x} , {point.y}')
+                print(f'Fisrt: {first.x} , {first.y}')
+                print(
+                    f'Next Point: {self.vertexes[i+1].x} , {self.vertexes[i+1].y}')
+
+                print(
+                    f'Euclidean distance point and first: {gt.euclideanDistance(point.x, point.y, first.x, first.y)}')
+                print(
+                    f'Euclidean distance point and next element: {gt.euclideanDistance(point.x, point.y, self.vertexes[i+1].x, self.vertexes[i+1].y)}\n\n')
+                if point != first and gt.euclideanDistance(point.x, point.y, first.x, first.y) < gt.euclideanDistance(point.x, point.y, self.vertexes[i+1].x, self.vertexes[i+1].y) and abs(gt.euclideanDistance(point.x, point.y, first.x, first.y) - gt.euclideanDistance(point.x, point.y, self.vertexes[i+1].x, self.vertexes[i+1].y)) > 10:
+                    print('Entrou aqui')
+                    self.edges.append(Edge(point, first))
+                    first = self.vertexes[i+1]
+                    firstIndex = i+1
+                else:
+                    self.edges.append(
+                        Edge(self.vertexes[i], self.vertexes[i+1]))

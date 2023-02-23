@@ -129,3 +129,7 @@ class GeometricTransformation:
             v.x = ((v.x/dp)*x)+u1
             v.y = ((v.y/dp)*y)+u2
             v.z = (v.z/dp)
+
+    @staticmethod
+    def euclideanDistance(x2, y2, x1, y1):
+        return math.sqrt(math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2))

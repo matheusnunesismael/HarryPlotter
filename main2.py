@@ -19,8 +19,8 @@ focalPoint = Vertex(0, 0, 0)
 viewUp = Vertex(0, 1, 0)
 dp = gt.distanceTwoVertexes(VRP, focalPoint)
 gt.calculateSRCVertexes(test.vertexes, VRP, focalPoint, viewUp)
-gt.calculateSRTVertexes(test.vertexes, Vertex(-400, -300, 1),
-                        Vertex(400, 300, 1), Vertex(0, 0, 1), Vertex(800, 600, 1), dp)
+gt.calculateSRTVertexes(test.vertexes, Vertex(1, 0, 1),
+                        Vertex(300, 300, 1), Vertex(0, 0, 1), Vertex(800, 600, 1), dp)
 
 for edge in test.edges:
     # print(edge.startVertex.getXY())
